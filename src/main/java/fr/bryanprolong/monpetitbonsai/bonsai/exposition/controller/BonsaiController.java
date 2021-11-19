@@ -5,9 +5,11 @@ import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.service.BonsaiService;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.BonsaiMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,10 +39,10 @@ public class BonsaiController {
     }
 
     @PostMapping
-    public BonsaiDTO addBonsai(@RequestBody BonsaiDTO bonsaiDTO) {
+    public ResponseEntity<BonsaiDTO> addBonsai(@RequestBody BonsaiDTO bonsaiDTO, @RequestHeader HttpHeaders headers) {
         Bonsai bonsaiInput = BonsaiMapper.mapBonsaiDTOtoBonsai(bonsaiDTO);
         Bonsai bonsaiOutput = bonsaiService.create(bonsaiInput);
-        return BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput);
+        return ResponseEntity.created(URI.create("http://" + headers.getHost() + "/bonsai/" + bonsaiDTO.getId())).body(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
     }
 
     @DeleteMapping("/{uuid}")
