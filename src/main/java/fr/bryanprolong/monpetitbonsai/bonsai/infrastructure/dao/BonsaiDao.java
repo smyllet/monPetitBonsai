@@ -1,5 +1,6 @@
-package fr.bryanprolong.monpetitbonsai.bonsai;
+package fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.dao;
 
+import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.entity.BonsaiEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package fr.bryanprolong.monpetitbonsai.bonsai;
+package fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
