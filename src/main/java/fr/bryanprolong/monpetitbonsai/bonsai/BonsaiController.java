@@ -1,7 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.bonsai;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
