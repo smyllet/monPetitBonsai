@@ -1,3 +1,4 @@
+drop table if exists monPetitBonsai.repotting;
 drop table if exists monPetitBonsai.pruning;
 drop table if exists monPetitBonsai.watering;
 drop table if exists monPetitBonsai.bonsai;
@@ -36,6 +37,13 @@ create table monPetitBonsai.pruning (
      foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
 );
 
+create table monPetitBonsai.repotting (
+      id UUID primary key not null,
+      datetime timestamp not null,
+      bonsai_id UUID not null,
+      foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
+);
+
 insert into monPetitBonsai.owner(id, name) values ('a3387036-4946-11ec-81d3-0242ac130003', 'Bryan'), ('ae1f28b4-4946-11ec-81d3-0242ac130003', 'Nahoufane');
 
 insert into monPetitBonsai.bonsai(id, name, species, acquisition_date, acquisition_age, owner_id, status) values
@@ -51,3 +59,6 @@ insert into monPetitBonsai.watering(id, datetime, bonsai_id) VALUES
 
 insert into monPetitBonsai.pruning(id, datetime, bonsai_id) VALUES
     ('f9be6bce-4949-11ec-81d3-0242ac130003', '2021-11-18 03:40:00', '63696432-01a2-4b43-b162-47b4f1e6062a');
+
+insert into monPetitBonsai.repotting(id, datetime, bonsai_id) VALUES
+    ('b269ca7e-494a-11ec-81d3-0242ac130003', '2021-11-15 06:01:00', '21ea2a5a-a7d0-436f-b40b-a369f00748f6');
