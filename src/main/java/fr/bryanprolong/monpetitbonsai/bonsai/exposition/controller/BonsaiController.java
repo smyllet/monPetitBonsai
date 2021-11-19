@@ -52,4 +52,15 @@ public class BonsaiController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PatchMapping("/{uuid}")
+    public ResponseEntity<BonsaiDTO> updateById(@PathVariable("uuid") String uuid, @RequestBody BonsaiDTO bonsaiDTO) {
+        try {
+            Bonsai bonsaiInput = BonsaiMapper.mapBonsaiDTOtoBonsai(bonsaiDTO);
+            Bonsai bonsaiOutput = bonsaiService.updateById(UUID.fromString(uuid), bonsaiInput);
+            return ResponseEntity.ok(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
+        } catch (BonsaiNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

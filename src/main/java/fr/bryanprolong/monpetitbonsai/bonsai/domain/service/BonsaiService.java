@@ -34,4 +34,20 @@ public class BonsaiService {
     public void deleteById(UUID uuid) throws BonsaiNotFoundException {
         bonsaiRepository.deleteById(uuid);
     }
+
+    public Bonsai updateById(UUID uuid, Bonsai bonsai) throws BonsaiNotFoundException {
+        Optional<Bonsai> optionalBonsai = findById(uuid);
+        if(optionalBonsai.isPresent()) {
+            Bonsai bonsaiToUpdate = optionalBonsai.get();
+
+            if(bonsai.getName() != null) bonsaiToUpdate.setName(bonsai.getName());
+            if(bonsai.getSpecies() != null) bonsaiToUpdate.setSpecies(bonsai.getSpecies());
+            if(bonsai.getAcquisition_date() != null) bonsaiToUpdate.setAcquisition_date(bonsai.getAcquisition_date());
+            if(bonsai.getAcquisition_age() != 0) bonsaiToUpdate.setAcquisition_age(bonsai.getAcquisition_age());
+
+            return bonsaiRepository.updateById(bonsaiToUpdate);
+        } else {
+            throw new BonsaiNotFoundException();
+        }
+    }
 }

@@ -45,4 +45,10 @@ public class BonsaiRepository {
             throw new BonsaiNotFoundException();
         }
     }
+
+    public Bonsai updateById(Bonsai bonsai) {
+        BonsaiEntity bonsaiInput = BonsaiMapper.mapBonsaiToBonsaiEntity(bonsai);
+        BonsaiEntity bonsaiOutput = bonsaiDao.save(bonsaiInput);
+        return BonsaiMapper.mapBonsaiEntityToBonsai(bonsaiOutput);
+    }
 }
