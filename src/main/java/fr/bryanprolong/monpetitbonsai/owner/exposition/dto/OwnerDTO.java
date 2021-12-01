@@ -1,7 +1,5 @@
 package fr.bryanprolong.monpetitbonsai.owner.exposition.dto;
 
-import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
-
 import java.util.List;
 import java.util.UUID;
 

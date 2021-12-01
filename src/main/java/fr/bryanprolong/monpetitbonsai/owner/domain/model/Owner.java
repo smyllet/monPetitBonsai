@@ -1,7 +1,5 @@
 package fr.bryanprolong.monpetitbonsai.owner.domain.model;
 
-import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
-
 import java.util.List;
 import java.util.UUID;
 
