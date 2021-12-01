@@ -2,7 +2,7 @@ package fr.bryanprolong.monpetitbonsai.bonsai.modelMapper;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
-import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.entity.BonsaiEntity;
+import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 
 public class BonsaiMapper {
     public static Bonsai mapBonsaiDTOtoBonsai(BonsaiDTO bonsaiDTO) {
@@ -14,6 +14,8 @@ public class BonsaiMapper {
         bonsai.setSpecies(bonsaiDTO.getSpecies());
         bonsai.setStatus(bonsaiDTO.getStatus());
         bonsai.setAcquisition_date(bonsaiDTO.getAcquisition_date());
+
+        bonsai.setOwner(OwnerMapper.mapOwnerIdToOwner(bonsaiDTO.getOwner_id()));
 
         return bonsai;
     }
@@ -28,6 +30,8 @@ public class BonsaiMapper {
         bonsaiDTO.setStatus(bonsai.getStatus());
         bonsaiDTO.setAcquisition_date(bonsai.getAcquisition_date());
 
+        bonsaiDTO.setOwner_id(bonsai.getOwner().getId());
+
         return bonsaiDTO;
     }
 
@@ -41,6 +45,8 @@ public class BonsaiMapper {
         bonsai.setStatus(bonsaiEntity.getStatus());
         bonsai.setAcquisition_date(bonsaiEntity.getAcquisition_date());
 
+        bonsai.setOwner(OwnerMapper.mapOwnerEntityToOwner(bonsaiEntity.getOwner()));
+
         return bonsai;
     }
 
@@ -53,6 +59,8 @@ public class BonsaiMapper {
         bonsaiEntity.setSpecies(bonsai.getSpecies());
         bonsaiEntity.setStatus(bonsai.getStatus());
         bonsaiEntity.setAcquisition_date(bonsai.getAcquisition_date());
+
+        bonsaiEntity.setOwner(OwnerMapper.mapOwnerToOwnerEntity(bonsai.getOwner()));
 
         return bonsaiEntity;
     }

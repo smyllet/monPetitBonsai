@@ -8,6 +8,8 @@ public class Bonsai {
 
     private String name;
 
+    private Owner owner;
+
     private String species;
 
     private Date acquisition_date;
@@ -33,6 +35,14 @@ public class Bonsai {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getSpecies() {

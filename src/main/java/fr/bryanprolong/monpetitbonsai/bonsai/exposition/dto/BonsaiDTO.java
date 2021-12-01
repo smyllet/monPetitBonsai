@@ -8,6 +8,8 @@ public class BonsaiDTO {
 
     private String name;
 
+    private UUID owner_id;
+
     private String species;
 
     private Date acquisition_date;
@@ -33,6 +35,14 @@ public class BonsaiDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public UUID getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(UUID owner_id) {
+        this.owner_id = owner_id;
     }
 
     public String getSpecies() {

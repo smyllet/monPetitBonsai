@@ -1,10 +1,10 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.repository;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
-import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.entity.BonsaiEntity;
+import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.BonsaiMapper;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
-import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.dao.BonsaiDao;
+import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
