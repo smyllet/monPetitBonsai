@@ -1,4 +1,4 @@
-package fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.entity;
+package fr.bryanprolong.monpetitbonsai.commons.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,6 +17,10 @@ public class BonsaiEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name="owner_id")
+    private OwnerEntity owner;
 
     @Column(name = "species")
     private String species;
@@ -47,6 +51,14 @@ public class BonsaiEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public OwnerEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerEntity owner) {
+        this.owner = owner;
     }
 
     public String getSpecies() {
