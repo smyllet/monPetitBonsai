@@ -5,6 +5,8 @@ import fr.bryanprolong.monpetitbonsai.owner.infrastructure.repository.OwnerRepos
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OwnerService {
@@ -16,5 +18,9 @@ public class OwnerService {
 
     public List<Owner> findAll() {
         return ownerRepository.findAll();
+    }
+
+    public Optional<Owner> findById(UUID id) {
+        return ownerRepository.findById(id);
     }
 }
