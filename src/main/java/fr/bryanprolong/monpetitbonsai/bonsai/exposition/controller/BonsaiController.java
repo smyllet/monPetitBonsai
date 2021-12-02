@@ -42,7 +42,7 @@ public class BonsaiController {
     public ResponseEntity<BonsaiDTO> addBonsai(@RequestBody BonsaiDTO bonsaiDTO, @RequestHeader HttpHeaders headers) {
         Bonsai bonsaiInput = BonsaiMapper.mapBonsaiDTOtoBonsai(bonsaiDTO);
         Bonsai bonsaiOutput = bonsaiService.create(bonsaiInput);
-        return ResponseEntity.created(URI.create("http://" + headers.getHost() + "/bonsai/" + bonsaiDTO.getId())).body(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
+        return ResponseEntity.created(URI.create("http://" + headers.getHost() + "/bonsai/" + bonsaiOutput.getId())).body(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
     }
 
     @DeleteMapping("/{uuid}")

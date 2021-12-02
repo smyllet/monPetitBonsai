@@ -23,4 +23,8 @@ public class OwnerService {
     public Optional<Owner> findById(UUID id) {
         return ownerRepository.findById(id);
     }
+
+    public Owner create(Owner owner) {
+        return ownerRepository.create(owner);
+    }
 }

@@ -1,12 +1,13 @@
 package fr.bryanprolong.monpetitbonsai.owner.exposition.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class OwnerDTO {
     private UUID id;
     private String name;
-    private List<BonsaiDTO> bonsais;
+    private List<BonsaiDTO> bonsais = new ArrayList<>();
 
     public OwnerDTO() {
     }
