@@ -18,6 +18,8 @@ public class BonsaiDTO {
 
     private String status;
 
+    private Date last_watering;
+
     public BonsaiDTO() {
     }
 
@@ -75,5 +77,13 @@ public class BonsaiDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getLast_watering() {
+        return last_watering;
+    }
+
+    public void setLast_watering(Date last_watering) {
+        this.last_watering = last_watering;
     }
 }

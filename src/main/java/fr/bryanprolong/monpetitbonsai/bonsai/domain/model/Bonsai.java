@@ -1,6 +1,10 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.domain.model;
 
+import fr.bryanprolong.monpetitbonsai.commons.entity.WateringEntity;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Bonsai {
@@ -17,6 +21,8 @@ public class Bonsai {
     private int acquisition_age;
 
     private String status;
+
+    private List<Watering> watering = new ArrayList<>();
 
     public Bonsai() {
     }
@@ -75,5 +81,13 @@ public class Bonsai {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Watering> getWatering() {
+        return watering;
+    }
+
+    public void setWatering(List<Watering> watering) {
+        this.watering = watering;
     }
 }

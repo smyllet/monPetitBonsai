@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "bonsai")
@@ -33,6 +34,9 @@ public class BonsaiEntity {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
+    private List<WateringEntity> watering;
 
     public BonsaiEntity() {
     }
@@ -91,5 +95,13 @@ public class BonsaiEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<WateringEntity> getWatering() {
+        return watering;
+    }
+
+    public void setWatering(List<WateringEntity> watering) {
+        this.watering = watering;
     }
 }
