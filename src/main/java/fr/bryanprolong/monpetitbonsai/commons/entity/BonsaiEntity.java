@@ -38,6 +38,9 @@ public class BonsaiEntity {
     @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
     private List<WateringEntity> watering;
 
+    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
+    private List<RepottingEntity> repotting;
+
     public BonsaiEntity() {
     }
 
@@ -103,5 +106,13 @@ public class BonsaiEntity {
 
     public void setWatering(List<WateringEntity> watering) {
         this.watering = watering;
+    }
+
+    public List<RepottingEntity> getRepotting() {
+        return repotting;
+    }
+
+    public void setRepotting(List<RepottingEntity> repotting) {
+        this.repotting = repotting;
     }
 }

@@ -20,6 +20,8 @@ public class BonsaiDTO {
 
     private Date last_watering;
 
+    private Date last_repotting;
+
     public BonsaiDTO() {
     }
 
@@ -85,5 +87,13 @@ public class BonsaiDTO {
 
     public void setLast_watering(Date last_watering) {
         this.last_watering = last_watering;
+    }
+
+    public Date getLast_repotting() {
+        return last_repotting;
+    }
+
+    public void setLast_repotting(Date last_repotting) {
+        this.last_repotting = last_repotting;
     }
 }

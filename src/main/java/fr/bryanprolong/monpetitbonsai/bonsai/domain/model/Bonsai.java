@@ -24,6 +24,8 @@ public class Bonsai {
 
     private List<Watering> watering = new ArrayList<>();
 
+    private List<Repotting> repotting = new ArrayList<>();
+
     public Bonsai() {
     }
 
@@ -89,5 +91,13 @@ public class Bonsai {
 
     public void setWatering(List<Watering> watering) {
         this.watering = watering;
+    }
+
+    public List<Repotting> getRepotting() {
+        return repotting;
+    }
+
+    public void setRepotting(List<Repotting> repotting) {
+        this.repotting = repotting;
     }
 }
