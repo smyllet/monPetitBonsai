@@ -5,6 +5,7 @@ import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.BonsaiMapper;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,8 @@ public class BonsaiRepository {
         this.bonsaiDao = bonsaiDao;
     }
 
-    public List<Bonsai> findAll() {
-        return bonsaiDao.findAll().stream()
+    public List<Bonsai> findAll(Status status, int olderThan) {
+        return bonsaiDao.findAllFiltered(status, olderThan).stream()
                 .map(BonsaiMapper::mapBonsaiEntityToBonsai)
                 .collect(Collectors.toList());
     }

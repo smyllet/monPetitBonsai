@@ -20,8 +20,8 @@ public class BonsaiService {
         this.bonsaiRepository = bonsaiRepository;
     }
 
-    public List<Bonsai> findAll() {
-        return bonsaiRepository.findAll();
+    public List<Bonsai> findAll(Status status, int olderThan) {
+        return bonsaiRepository.findAll(status, olderThan);
     }
 
     public Optional<Bonsai> findById(UUID uuid) {
