@@ -5,6 +5,7 @@ import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.repository.BonsaiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class BonsaiService {
         this.bonsaiRepository = bonsaiRepository;
     }
 
-    public List<Bonsai> findAll(Status status, int olderThan) {
-        return bonsaiRepository.findAll(status, olderThan);
+    public List<Bonsai> findAll(Status status, int olderThan, Sort sort) {
+        return bonsaiRepository.findAll(status, olderThan, sort);
     }
 
     public Optional<Bonsai> findById(UUID uuid) {
