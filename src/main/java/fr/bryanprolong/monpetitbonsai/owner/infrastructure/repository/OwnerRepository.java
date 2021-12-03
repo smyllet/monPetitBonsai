@@ -3,13 +3,11 @@ package fr.bryanprolong.monpetitbonsai.owner.infrastructure.repository;
 import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.OwnerEntity;
-import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import fr.bryanprolong.monpetitbonsai.commons.dao.OwnerDao;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,16 +37,13 @@ public class OwnerRepository {
     public Owner create(Owner owner) {
         OwnerEntity ownerInput = OwnerMapper.mapOwnerToOwnerEntity(owner);
         OwnerEntity ownerOutput = ownerDao.save(ownerInput);
-        List<BonsaiEntity> bonsaisOutput = bonsaiDao.saveAll(
+        bonsaiDao.updateOwnerOfBonsais(
+                ownerOutput,
                 ownerInput.getBonsais().stream()
-                        .peek(bonsaiEntity -> {
-                            bonsaiEntity.setOwner(ownerOutput);
-                            bonsaiEntity.setStatus(Status.ALIVE);
-                            bonsaiEntity.setAcquisition_date(new Date());
-                        })
+                        .map(BonsaiEntity::getId)
                         .collect(Collectors.toList())
         );
-        ownerOutput.setBonsais(bonsaisOutput);
-        return OwnerMapper.mapOwnerEntityToOwner(ownerOutput);
+
+        return OwnerMapper.mapOwnerEntityToOwner(ownerDao.getById(ownerOutput.getId()));
     }
 }
