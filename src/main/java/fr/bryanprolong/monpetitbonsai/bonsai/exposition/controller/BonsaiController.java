@@ -17,14 +17,12 @@ import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.PruningMapper;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.RepottingMapper;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.WateringMapper;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,7 +37,7 @@ public class BonsaiController {
     }
 
     @GetMapping
-    public List<BonsaiDTO> getBonsais(@RequestParam(required = false) Status status, @RequestParam(required = false, defaultValue = "0") int olderThan, @RequestParam(required = false, defaultValue = "STATUS", name = "sort") BonsaiSort bonsaiSort, @RequestParam(required = false, defaultValue = "DESC") Sort.Direction direction) {
+    public List<BonsaiDTO> getBonsais(@RequestParam(required = false) Status status, @RequestParam(required = false, defaultValue = "-1") int olderThan, @RequestParam(required = false, defaultValue = "STATUS", name = "sort") BonsaiSort bonsaiSort, @RequestParam(required = false, defaultValue = "DESC") Sort.Direction direction) {
         return bonsaiService.findAll(status, olderThan, Sort.by(direction, bonsaiSort.toString().toLowerCase())).stream()
                 .map(BonsaiMapper::mapBonsaiToBonsaiDTO)
                 .collect(Collectors.toList());
