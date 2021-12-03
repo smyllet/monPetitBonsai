@@ -2,6 +2,7 @@ package fr.bryanprolong.monpetitbonsai.bonsai.domain.service;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
+import fr.bryanprolong.monpetitbonsai.bonsai.exposition.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.repository.BonsaiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,20 @@ public class BonsaiService {
             if(bonsai.getAcquisition_age() != 0) bonsaiToUpdate.setAcquisition_age(bonsai.getAcquisition_age());
 
             return bonsaiRepository.updateById(bonsaiToUpdate);
+        } else {
+            throw new BonsaiNotFoundException();
+        }
+    }
+
+    public void changeBonsaiStatusById(UUID uuid, Status status) throws BonsaiNotFoundException {
+        Optional<Bonsai> optionalBonsai = findById(uuid);
+
+        if(optionalBonsai.isPresent()) {
+            Bonsai bonsaiToUpdate = optionalBonsai.get();
+
+            bonsaiToUpdate.setStatus(status.toString());
+
+            bonsaiRepository.updateById(bonsaiToUpdate);
         } else {
             throw new BonsaiNotFoundException();
         }

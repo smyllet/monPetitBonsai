@@ -61,23 +61,29 @@ public class BonsaiMapper {
 
         bonsai.setOwner(OwnerMapper.mapOwnerEntityToOwner(bonsaiEntity.getOwner()));
 
-        bonsai.setWaterings(
-                bonsaiEntity.getWaterings().stream()
-                        .map(WateringMapper::mapWateringEntityToWatering)
-                        .collect(Collectors.toList())
-        );
+        if(bonsaiEntity.getWaterings() != null) {
+            bonsai.setWaterings(
+                    bonsaiEntity.getWaterings().stream()
+                            .map(WateringMapper::mapWateringEntityToWatering)
+                            .collect(Collectors.toList())
+            );
+        }
 
-        bonsai.setRepottings(
-                bonsaiEntity.getRepottings().stream()
-                        .map(RepottingMapper::mapRepottingEntityToRepotting)
-                        .collect(Collectors.toList())
-        );
+        if(bonsaiEntity.getRepottings() != null) {
+            bonsai.setRepottings(
+                    bonsaiEntity.getRepottings().stream()
+                            .map(RepottingMapper::mapRepottingEntityToRepotting)
+                            .collect(Collectors.toList())
+            );
+        }
 
-        bonsai.setPrunings(
-                bonsaiEntity.getPrunings().stream()
-                        .map(PruningMapper::mapPruningEntityToPruning)
-                        .collect(Collectors.toList())
-        );
+        if(bonsaiEntity.getPrunings() != null) {
+            bonsai.setPrunings(
+                    bonsaiEntity.getPrunings().stream()
+                            .map(PruningMapper::mapPruningEntityToPruning)
+                            .collect(Collectors.toList())
+            );
+        }
 
         return bonsai;
     }

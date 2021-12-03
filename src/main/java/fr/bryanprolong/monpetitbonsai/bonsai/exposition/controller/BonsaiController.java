@@ -2,15 +2,20 @@ package fr.bryanprolong.monpetitbonsai.bonsai.exposition.controller;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
+import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Watering;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.service.BonsaiService;
+import fr.bryanprolong.monpetitbonsai.bonsai.exposition.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
+import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.WateringDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.BonsaiMapper;
+import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.WateringMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -62,6 +67,32 @@ public class BonsaiController {
             Bonsai bonsaiOutput = bonsaiService.updateById(UUID.fromString(uuid), bonsaiInput);
             return ResponseEntity.ok(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
         } catch (BonsaiNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{uuid}/status")
+    public ResponseEntity<BonsaiDTO> changeBonsaiStatusById(@PathVariable("uuid") String uuid, @RequestBody Status status) {
+        try {
+            bonsaiService.changeBonsaiStatusById(UUID.fromString(uuid), status);
+
+            return ResponseEntity.noContent().build();
+        } catch (BonsaiNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{uuid}/watering")
+    public ResponseEntity<List<WateringDTO>> getWateringByBonsaiId(@PathVariable("uuid") String uuid) {
+        Optional<Bonsai> optionalBonsai = bonsaiService.findById(UUID.fromString(uuid));
+
+        if(optionalBonsai.isPresent()) {
+            List<Watering> waterings = optionalBonsai.get().getWaterings();
+            return ResponseEntity.ok(waterings.stream()
+                    .map(WateringMapper::mapWateringToWateringDTO)
+                    .collect(Collectors.toList())
+            );
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
