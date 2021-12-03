@@ -1,7 +1,5 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.domain.model;
 
-import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,8 +7,6 @@ public class Watering {
     private UUID id;
 
     private Date datetime;
-
-    private BonsaiEntity bonsai;
 
     public Watering() {
     }
@@ -29,13 +25,5 @@ public class Watering {
 
     public void setDatetime(Date datetime) {
         this.datetime = datetime;
-    }
-
-    public BonsaiEntity getBonsai() {
-        return bonsai;
-    }
-
-    public void setBonsai(BonsaiEntity bonsai) {
-        this.bonsai = bonsai;
     }
 }

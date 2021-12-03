@@ -36,13 +36,13 @@ public class BonsaiEntity {
     private String status;
 
     @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
-    private List<WateringEntity> watering;
+    private List<WateringEntity> waterings;
 
     @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
-    private List<RepottingEntity> repotting;
+    private List<RepottingEntity> repottings;
 
     @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai")
-    private List<PruningEntity> pruning;
+    private List<PruningEntity> prunings;
 
     public BonsaiEntity() {
     }
@@ -103,27 +103,27 @@ public class BonsaiEntity {
         this.status = status;
     }
 
-    public List<WateringEntity> getWatering() {
-        return watering;
+    public List<WateringEntity> getWaterings() {
+        return waterings;
     }
 
-    public void setWatering(List<WateringEntity> watering) {
-        this.watering = watering;
+    public void setWaterings(List<WateringEntity> watering) {
+        this.waterings = watering;
     }
 
-    public List<RepottingEntity> getRepotting() {
-        return repotting;
+    public List<RepottingEntity> getRepottings() {
+        return repottings;
     }
 
-    public void setRepotting(List<RepottingEntity> repotting) {
-        this.repotting = repotting;
+    public void setRepottings(List<RepottingEntity> repotting) {
+        this.repottings = repotting;
     }
 
-    public List<PruningEntity> getPruning() {
-        return pruning;
+    public List<PruningEntity> getPrunings() {
+        return prunings;
     }
 
-    public void setPruning(List<PruningEntity> pruning) {
-        this.pruning = pruning;
+    public void setPrunings(List<PruningEntity> pruning) {
+        this.prunings = pruning;
     }
 }

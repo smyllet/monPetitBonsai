@@ -20,9 +20,9 @@ public class Bonsai {
 
     private String status;
 
-    private List<Watering> watering = new ArrayList<>();
+    private List<Watering> waterings = new ArrayList<>();
 
-    private List<Repotting> repotting = new ArrayList<>();
+    private List<Repotting> repottings = new ArrayList<>();
 
     private List<Pruning> prunings = new ArrayList<>();
 
@@ -85,20 +85,20 @@ public class Bonsai {
         this.status = status;
     }
 
-    public List<Watering> getWatering() {
-        return watering;
+    public List<Watering> getWaterings() {
+        return waterings;
     }
 
-    public void setWatering(List<Watering> watering) {
-        this.watering = watering;
+    public void setWaterings(List<Watering> waterings) {
+        this.waterings = waterings;
     }
 
-    public List<Repotting> getRepotting() {
-        return repotting;
+    public List<Repotting> getRepottings() {
+        return repottings;
     }
 
-    public void setRepotting(List<Repotting> repotting) {
-        this.repotting = repotting;
+    public void setRepottings(List<Repotting> repottings) {
+        this.repottings = repottings;
     }
 
     public List<Pruning> getPrunings() {

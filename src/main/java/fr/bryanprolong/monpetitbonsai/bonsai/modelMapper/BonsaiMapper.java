@@ -36,14 +36,14 @@ public class BonsaiMapper {
         bonsaiDTO.setStatus(bonsai.getStatus());
         bonsaiDTO.setAcquisition_date(bonsai.getAcquisition_date());
 
-        if(bonsai.getWatering().size() > 0) {
-            bonsai.getWatering().sort(Comparator.comparing(Watering::getDatetime));
-            bonsaiDTO.setLast_watering(bonsai.getWatering().get(bonsai.getWatering().size()-1).getDatetime());
+        if(bonsai.getWaterings().size() > 0) {
+            bonsai.getWaterings().sort(Comparator.comparing(Watering::getDatetime));
+            bonsaiDTO.setLast_watering(bonsai.getWaterings().get(bonsai.getWaterings().size()-1).getDatetime());
         }
 
-        if(bonsai.getRepotting().size() > 0) {
-            bonsai.getRepotting().sort(Comparator.comparing(Repotting::getDatetime));
-            bonsaiDTO.setLast_repotting(bonsai.getRepotting().get(bonsai.getRepotting().size()-1).getDatetime());
+        if(bonsai.getRepottings().size() > 0) {
+            bonsai.getRepottings().sort(Comparator.comparing(Repotting::getDatetime));
+            bonsaiDTO.setLast_repotting(bonsai.getRepottings().get(bonsai.getRepottings().size()-1).getDatetime());
         }
 
         if(bonsai.getPrunings().size() > 0) {
@@ -68,20 +68,20 @@ public class BonsaiMapper {
 
         bonsai.setOwner(OwnerMapper.mapOwnerEntityToOwner(bonsaiEntity.getOwner()));
 
-        bonsai.setWatering(
-                bonsaiEntity.getWatering().stream()
+        bonsai.setWaterings(
+                bonsaiEntity.getWaterings().stream()
                         .map(WateringMapper::mapWateringEntityToWatering)
                         .collect(Collectors.toList())
         );
 
-        bonsai.setRepotting(
-                bonsaiEntity.getRepotting().stream()
+        bonsai.setRepottings(
+                bonsaiEntity.getRepottings().stream()
                         .map(RepottingMapper::mapRepottingEntityToRepotting)
                         .collect(Collectors.toList())
         );
 
         bonsai.setPrunings(
-                bonsaiEntity.getPruning().stream()
+                bonsaiEntity.getPrunings().stream()
                         .map(PruningMapper::mapPruningEntityToPruning)
                         .collect(Collectors.toList())
         );
