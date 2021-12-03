@@ -2,7 +2,7 @@ package fr.bryanprolong.monpetitbonsai.bonsai.domain.service;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
-import fr.bryanprolong.monpetitbonsai.bonsai.exposition.Status;
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.infrastructure.repository.BonsaiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,7 +58,7 @@ public class BonsaiService {
         if(optionalBonsai.isPresent()) {
             Bonsai bonsaiToUpdate = optionalBonsai.get();
 
-            bonsaiToUpdate.setStatus(status.toString());
+            bonsaiToUpdate.setStatus(status);
 
             bonsaiRepository.updateById(bonsaiToUpdate);
         } else {

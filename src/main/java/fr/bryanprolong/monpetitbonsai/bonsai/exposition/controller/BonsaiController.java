@@ -6,7 +6,7 @@ import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Pruning;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Repotting;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Watering;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.service.BonsaiService;
-import fr.bryanprolong.monpetitbonsai.bonsai.exposition.Status;
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.PruningDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.RepottingDTO;

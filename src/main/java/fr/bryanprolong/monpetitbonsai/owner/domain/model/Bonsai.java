@@ -1,5 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.owner.domain.model;
 
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,7 +16,7 @@ public class Bonsai {
 
     private int acquisition_age;
 
-    private String status;
+    private Status status;
 
     public Bonsai() {
     }
@@ -59,11 +61,11 @@ public class Bonsai {
         this.acquisition_age = acquisition_age;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }

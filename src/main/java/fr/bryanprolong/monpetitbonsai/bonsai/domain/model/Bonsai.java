@@ -1,5 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.domain.model;
 
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Bonsai {
 
     private int acquisition_age;
 
-    private String status;
+    private Status status;
 
     private List<Watering> waterings = new ArrayList<>();
 
@@ -77,11 +79,11 @@ public class Bonsai {
         this.acquisition_age = acquisition_age;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

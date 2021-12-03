@@ -3,6 +3,7 @@ package fr.bryanprolong.monpetitbonsai.owner.infrastructure.repository;
 import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.OwnerEntity;
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import fr.bryanprolong.monpetitbonsai.commons.dao.OwnerDao;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
@@ -42,7 +43,7 @@ public class OwnerRepository {
                 ownerInput.getBonsais().stream()
                         .peek(bonsaiEntity -> {
                             bonsaiEntity.setOwner(ownerOutput);
-                            bonsaiEntity.setStatus("alive");
+                            bonsaiEntity.setStatus(Status.ALIVE);
                             bonsaiEntity.setAcquisition_date(new Date());
                         })
                         .collect(Collectors.toList())

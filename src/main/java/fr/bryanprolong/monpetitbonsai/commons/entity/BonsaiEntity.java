@@ -1,5 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.commons.entity;
 
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,7 +34,8 @@ public class BonsaiEntity {
     private int acquisition_age;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
     @OrderBy("datetime")
@@ -98,11 +100,11 @@ public class BonsaiEntity {
         this.acquisition_age = acquisition_age;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

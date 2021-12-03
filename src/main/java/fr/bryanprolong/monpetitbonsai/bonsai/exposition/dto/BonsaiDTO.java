@@ -1,5 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto;
 
+import fr.bryanprolong.monpetitbonsai.commons.type.Status;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +18,7 @@ public class BonsaiDTO {
 
     private int acquisition_age;
 
-    private String status;
+    private Status status;
 
     private Date last_watering;
 
@@ -75,11 +77,11 @@ public class BonsaiDTO {
         this.acquisition_age = acquisition_age;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
