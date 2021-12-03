@@ -30,7 +30,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<OwnerDTO> getBonsaiByUUID(@PathVariable("uuid") String uuid) {
+    public ResponseEntity<OwnerDTO> getOwnerByUUID(@PathVariable("uuid") String uuid) {
         return ownerService.findById(UUID.fromString(uuid))
                 .map(OwnerMapper::mapOwnerToOwnerDTO)
                 .map(ResponseEntity::ok)
