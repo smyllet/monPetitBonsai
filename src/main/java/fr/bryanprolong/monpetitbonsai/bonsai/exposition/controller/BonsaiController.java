@@ -2,12 +2,15 @@ package fr.bryanprolong.monpetitbonsai.bonsai.exposition.controller;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
+import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Pruning;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Watering;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.service.BonsaiService;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.Status;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
+import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.PruningDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.WateringDTO;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.BonsaiMapper;
+import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.PruningMapper;
 import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.WateringMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +93,21 @@ public class BonsaiController {
             List<Watering> waterings = optionalBonsai.get().getWaterings();
             return ResponseEntity.ok(waterings.stream()
                     .map(WateringMapper::mapWateringToWateringDTO)
+                    .collect(Collectors.toList())
+            );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{uuid}/pruning")
+    public ResponseEntity<List<PruningDTO>> getPruningByBonsaiId(@PathVariable("uuid") String uuid) {
+        Optional<Bonsai> optionalBonsai = bonsaiService.findById(UUID.fromString(uuid));
+
+        if(optionalBonsai.isPresent()) {
+            List<Pruning> prunings = optionalBonsai.get().getPrunings();
+            return ResponseEntity.ok(prunings.stream()
+                    .map(PruningMapper::mapPruningToPruningDTO)
                     .collect(Collectors.toList())
             );
         } else {
