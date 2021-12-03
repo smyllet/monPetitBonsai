@@ -36,12 +36,15 @@ public class BonsaiEntity {
     private String status;
 
     @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
+    @OrderBy("datetime")
     private List<WateringEntity> waterings;
 
     @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
+    @OrderBy("datetime")
     private List<RepottingEntity> repottings;
 
     @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai")
+    @OrderBy("datetime")
     private List<PruningEntity> prunings;
 
     public BonsaiEntity() {

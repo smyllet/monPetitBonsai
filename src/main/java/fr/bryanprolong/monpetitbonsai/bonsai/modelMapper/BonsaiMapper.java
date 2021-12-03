@@ -1,13 +1,9 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.modelMapper;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
-import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Pruning;
-import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Repotting;
-import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Watering;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class BonsaiMapper {
@@ -37,17 +33,14 @@ public class BonsaiMapper {
         bonsaiDTO.setAcquisition_date(bonsai.getAcquisition_date());
 
         if(bonsai.getWaterings().size() > 0) {
-            bonsai.getWaterings().sort(Comparator.comparing(Watering::getDatetime));
             bonsaiDTO.setLast_watering(bonsai.getWaterings().get(bonsai.getWaterings().size()-1).getDatetime());
         }
 
         if(bonsai.getRepottings().size() > 0) {
-            bonsai.getRepottings().sort(Comparator.comparing(Repotting::getDatetime));
             bonsaiDTO.setLast_repotting(bonsai.getRepottings().get(bonsai.getRepottings().size()-1).getDatetime());
         }
 
         if(bonsai.getPrunings().size() > 0) {
-            bonsai.getPrunings().sort(Comparator.comparing(Pruning::getDatetime));
             bonsaiDTO.setLast_pruning(bonsai.getPrunings().get(bonsai.getPrunings().size()-1).getDatetime());
         }
 
