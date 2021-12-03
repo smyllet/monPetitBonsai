@@ -41,6 +41,9 @@ public class BonsaiEntity {
     @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
     private List<RepottingEntity> repotting;
 
+    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai")
+    private List<PruningEntity> pruning;
+
     public BonsaiEntity() {
     }
 
@@ -114,5 +117,13 @@ public class BonsaiEntity {
 
     public void setRepotting(List<RepottingEntity> repotting) {
         this.repotting = repotting;
+    }
+
+    public List<PruningEntity> getPruning() {
+        return pruning;
+    }
+
+    public void setPruning(List<PruningEntity> pruning) {
+        this.pruning = pruning;
     }
 }

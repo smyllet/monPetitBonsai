@@ -22,6 +22,8 @@ public class BonsaiDTO {
 
     private Date last_repotting;
 
+    private Date last_pruning;
+
     public BonsaiDTO() {
     }
 
@@ -95,5 +97,13 @@ public class BonsaiDTO {
 
     public void setLast_repotting(Date last_repotting) {
         this.last_repotting = last_repotting;
+    }
+
+    public Date getLast_pruning() {
+        return last_pruning;
+    }
+
+    public void setLast_pruning(Date last_pruning) {
+        this.last_pruning = last_pruning;
     }
 }

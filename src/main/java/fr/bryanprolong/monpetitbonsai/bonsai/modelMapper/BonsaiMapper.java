@@ -1,6 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.modelMapper;
 
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
+import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Pruning;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Repotting;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Watering;
 import fr.bryanprolong.monpetitbonsai.bonsai.exposition.dto.BonsaiDTO;
@@ -45,6 +46,11 @@ public class BonsaiMapper {
             bonsaiDTO.setLast_repotting(bonsai.getRepotting().get(bonsai.getRepotting().size()-1).getDatetime());
         }
 
+        if(bonsai.getPrunings().size() > 0) {
+            bonsai.getPrunings().sort(Comparator.comparing(Pruning::getDatetime));
+            bonsaiDTO.setLast_pruning(bonsai.getPrunings().get(bonsai.getPrunings().size()-1).getDatetime());
+        }
+
         bonsaiDTO.setOwner_id(bonsai.getOwner().getId());
 
         return bonsaiDTO;
@@ -71,6 +77,12 @@ public class BonsaiMapper {
         bonsai.setRepotting(
                 bonsaiEntity.getRepotting().stream()
                         .map(RepottingMapper::mapRepottingEntityToRepotting)
+                        .collect(Collectors.toList())
+        );
+
+        bonsai.setPrunings(
+                bonsaiEntity.getPruning().stream()
+                        .map(PruningMapper::mapPruningEntityToPruning)
                         .collect(Collectors.toList())
         );
 

@@ -1,7 +1,5 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.domain.model;
 
-import fr.bryanprolong.monpetitbonsai.commons.entity.WateringEntity;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +23,8 @@ public class Bonsai {
     private List<Watering> watering = new ArrayList<>();
 
     private List<Repotting> repotting = new ArrayList<>();
+
+    private List<Pruning> prunings = new ArrayList<>();
 
     public Bonsai() {
     }
@@ -99,5 +99,13 @@ public class Bonsai {
 
     public void setRepotting(List<Repotting> repotting) {
         this.repotting = repotting;
+    }
+
+    public List<Pruning> getPrunings() {
+        return prunings;
+    }
+
+    public void setPrunings(List<Pruning> prunings) {
+        this.prunings = prunings;
     }
 }
