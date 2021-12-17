@@ -7,26 +7,32 @@ import java.util.UUID;
 
 public class OwnerMapper {
     public static Owner mapOwnerIdToOwner(UUID owner_id) {
-        Owner owner = new Owner();
-        owner.setId(owner_id);
-        return owner;
+        if(owner_id != null) {
+            Owner owner = new Owner();
+            owner.setId(owner_id);
+            return owner;
+        } else return null;
     }
 
     public static Owner mapOwnerEntityToOwner(OwnerEntity ownerEntity) {
-        Owner owner = new Owner();
+        if(ownerEntity != null) {
+            Owner owner = new Owner();
 
-        owner.setId(ownerEntity.getId());
-        owner.setName(ownerEntity.getName());
+            owner.setId(ownerEntity.getId());
+            owner.setName(ownerEntity.getName());
 
-        return owner;
+            return owner;
+        } else return null;
     }
 
     public static OwnerEntity mapOwnerToOwnerEntity(Owner owner) {
-        OwnerEntity ownerEntity = new OwnerEntity();
+        if(owner != null) {
+            OwnerEntity ownerEntity = new OwnerEntity();
 
-        ownerEntity.setId(owner.getId());
-        ownerEntity.setName(owner.getName());
+            ownerEntity.setId(owner.getId());
+            ownerEntity.setName(owner.getName());
 
-        return ownerEntity;
+            return ownerEntity;
+        } else return null;
     }
 }

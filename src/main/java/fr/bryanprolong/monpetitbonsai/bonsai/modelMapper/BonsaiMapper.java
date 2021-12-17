@@ -44,7 +44,7 @@ public class BonsaiMapper {
             bonsaiDTO.setLast_pruning(bonsai.getPrunings().get(bonsai.getPrunings().size()-1).getDatetime());
         }
 
-        bonsaiDTO.setOwner_id(bonsai.getOwner().getId());
+        if(bonsai.getOwner() != null) bonsaiDTO.setOwner_id(bonsai.getOwner().getId());
 
         return bonsaiDTO;
     }

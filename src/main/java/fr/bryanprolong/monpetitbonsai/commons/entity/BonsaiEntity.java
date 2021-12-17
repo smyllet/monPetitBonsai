@@ -1,6 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.commons.entity;
 
 import fr.bryanprolong.monpetitbonsai.commons.type.Status;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -37,15 +38,15 @@ public class BonsaiEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai", orphanRemoval = true)
+    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai", cascade = CascadeType.ALL)
     @OrderBy("datetime")
     private List<WateringEntity> waterings;
 
-    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai", orphanRemoval = true)
+    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai", cascade = CascadeType.ALL)
     @OrderBy("datetime")
     private List<RepottingEntity> repottings;
 
-    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai", orphanRemoval = true)
+    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai", cascade = CascadeType.ALL)
     @OrderBy("datetime")
     private List<PruningEntity> prunings;
 
