@@ -3,9 +3,11 @@ package fr.bryanprolong.monpetitbonsai.owner.infrastructure.repository;
 import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.OwnerEntity;
+import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import fr.bryanprolong.monpetitbonsai.commons.dao.OwnerDao;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -45,5 +47,20 @@ public class OwnerRepository {
         );
 
         return OwnerMapper.mapOwnerEntityToOwner(ownerDao.getById(ownerOutput.getId()));
+    }
+
+    public void deleteById(UUID id) throws OwnerNotFoundException {
+        Optional<OwnerEntity> optionalOwnerEntity = ownerDao.findById(id);
+        if(optionalOwnerEntity.isPresent()) {
+            OwnerEntity ownerEntity = optionalOwnerEntity.get();
+            ownerDao.unBindBonsaiOfOwner(ownerEntity);
+            try {
+                ownerDao.deleteById(id);
+            } catch (EmptyResultDataAccessException e) {
+                throw new OwnerNotFoundException();
+            }
+        } else {
+            throw new OwnerNotFoundException();
+        }
     }
 }

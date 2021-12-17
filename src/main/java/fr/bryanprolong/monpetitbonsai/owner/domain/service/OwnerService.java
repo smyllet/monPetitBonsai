@@ -1,5 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.owner.domain.service;
 
+import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
 import fr.bryanprolong.monpetitbonsai.owner.infrastructure.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
@@ -27,4 +28,6 @@ public class OwnerService {
     public Owner create(Owner owner) {
         return ownerRepository.create(owner);
     }
+
+    public void deleteById(UUID id) throws OwnerNotFoundException {ownerRepository.deleteById(id);}
 }

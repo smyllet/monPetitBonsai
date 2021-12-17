@@ -1,5 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.owner.exposition.controller;
 
+import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
 import fr.bryanprolong.monpetitbonsai.owner.domain.service.OwnerService;
@@ -60,6 +61,16 @@ public class OwnerController {
                     .collect(Collectors.toList())
             );
         } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> deleteBonsai(@PathVariable("uuid") String uuid) {
+        try {
+            ownerService.deleteById(UUID.fromString(uuid));
+            return ResponseEntity.noContent().build();
+        } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
