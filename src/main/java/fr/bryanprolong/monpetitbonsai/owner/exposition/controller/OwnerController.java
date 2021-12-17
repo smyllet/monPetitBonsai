@@ -49,7 +49,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{uuid}/bonsais")
-    public ResponseEntity<List<BonsaiDTO>> addBonsaiByOwnerID(@PathVariable("uuid") String uuid) {
+    public ResponseEntity<List<BonsaiDTO>> getBonsaiByOwnerID(@PathVariable("uuid") String uuid) {
         Optional<Owner> ownerOptional = ownerService.findById(UUID.fromString(uuid));
 
         if(ownerOptional.isPresent()) {
