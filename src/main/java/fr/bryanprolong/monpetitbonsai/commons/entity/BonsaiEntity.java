@@ -37,15 +37,15 @@ public class BonsaiEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
+    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai", orphanRemoval = true)
     @OrderBy("datetime")
     private List<WateringEntity> waterings;
 
-    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
+    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai", orphanRemoval = true)
     @OrderBy("datetime")
     private List<RepottingEntity> repottings;
 
-    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai")
+    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai", orphanRemoval = true)
     @OrderBy("datetime")
     private List<PruningEntity> prunings;
 
