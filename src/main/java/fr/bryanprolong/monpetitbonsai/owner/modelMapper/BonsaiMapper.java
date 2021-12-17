@@ -2,10 +2,10 @@ package fr.bryanprolong.monpetitbonsai.owner.modelMapper;
 
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
-import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.BonsaiDTO;
+import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.OwnerBonsaiDTO;
 
 public class BonsaiMapper {
-    public static Bonsai mapBonsaiDTOtoBonsai(BonsaiDTO bonsaiDTO) {
+    public static Bonsai mapBonsaiDTOtoBonsai(OwnerBonsaiDTO bonsaiDTO) {
         Bonsai bonsai = new Bonsai();
 
         bonsai.setId(bonsaiDTO.getId());
@@ -16,8 +16,8 @@ public class BonsaiMapper {
         return bonsai;
     }
 
-    public static BonsaiDTO mapBonsaiToBonsaiDTO(Bonsai bonsai) {
-        BonsaiDTO bonsaiDTO = new BonsaiDTO();
+    public static OwnerBonsaiDTO mapBonsaiToBonsaiDTO(Bonsai bonsai) {
+        OwnerBonsaiDTO bonsaiDTO = new OwnerBonsaiDTO();
 
         bonsaiDTO.setId(bonsai.getId());
         bonsaiDTO.setName(bonsai.getName());

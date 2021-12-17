@@ -2,7 +2,7 @@ package fr.bryanprolong.monpetitbonsai.owner.exposition.dto;
 
 import java.util.UUID;
 
-public class BonsaiDTO {
+public class OwnerBonsaiDTO {
     private UUID id;
 
     private String name;
@@ -11,7 +11,7 @@ public class BonsaiDTO {
 
     private int age;
 
-    public BonsaiDTO() {
+    public OwnerBonsaiDTO() {
     }
 
     public UUID getId() {

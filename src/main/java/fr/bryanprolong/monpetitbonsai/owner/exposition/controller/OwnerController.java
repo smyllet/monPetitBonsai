@@ -3,7 +3,7 @@ package fr.bryanprolong.monpetitbonsai.owner.exposition.controller;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
 import fr.bryanprolong.monpetitbonsai.owner.domain.service.OwnerService;
-import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.BonsaiDTO;
+import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.OwnerBonsaiDTO;
 import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.OwnerDTO;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.BonsaiMapper;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
@@ -49,7 +49,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{uuid}/bonsais")
-    public ResponseEntity<List<BonsaiDTO>> getBonsaiByOwnerID(@PathVariable("uuid") String uuid) {
+    public ResponseEntity<List<OwnerBonsaiDTO>> getBonsaiByOwnerID(@PathVariable("uuid") String uuid) {
         Optional<Owner> ownerOptional = ownerService.findById(UUID.fromString(uuid));
 
         if(ownerOptional.isPresent()) {

@@ -7,7 +7,7 @@ import java.util.UUID;
 public class OwnerDTO {
     private UUID id;
     private String name;
-    private List<BonsaiDTO> bonsais = new ArrayList<>();
+    private List<OwnerBonsaiDTO> bonsais = new ArrayList<>();
 
     public OwnerDTO() {
     }
@@ -28,11 +28,11 @@ public class OwnerDTO {
         this.name = name;
     }
 
-    public List<BonsaiDTO> getBonsais() {
+    public List<OwnerBonsaiDTO> getBonsais() {
         return bonsais;
     }
 
-    public void setBonsais(List<BonsaiDTO> bonsais) {
+    public void setBonsais(List<OwnerBonsaiDTO> bonsais) {
         this.bonsais = bonsais;
     }
 }
