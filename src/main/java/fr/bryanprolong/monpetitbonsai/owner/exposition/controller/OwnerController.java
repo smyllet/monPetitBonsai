@@ -66,7 +66,7 @@ public class OwnerController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<Void> deleteBonsai(@PathVariable("uuid") String uuid) {
+    public ResponseEntity<Void> deleteOwner(@PathVariable("uuid") String uuid) {
         try {
             ownerService.deleteById(UUID.fromString(uuid));
             return ResponseEntity.noContent().build();
