@@ -59,4 +59,13 @@ public class OwnerService {
             } else throw new BonsaiNotFoundException();
         } else throw new OwnerNotFoundException();
     }
+
+    public void updateOwnerOfBonsaisWithNoOwner(UUID owner_id, List<UUID> bonsaisUUID) throws OwnerNotFoundException {
+        Optional<Owner> optionalOwner = ownerRepository.findById(owner_id);
+
+        if(optionalOwner.isPresent()) {
+            Owner owner = optionalOwner.get();
+            ownerRepository.updateOwnerOfBonsaisWithNoOwner(owner, bonsaisUUID);
+        } else throw new OwnerNotFoundException();
+    }
 }

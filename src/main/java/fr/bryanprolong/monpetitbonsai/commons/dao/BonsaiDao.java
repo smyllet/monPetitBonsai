@@ -23,4 +23,9 @@ public interface BonsaiDao extends JpaRepository<BonsaiEntity, UUID> {
     @Transactional
     @Query(value = "update bonsai set owner = :owner where id in (:bonsais_id)")
     void updateOwnerOfBonsais(@Param("owner") OwnerEntity owner, @Param("bonsais_id") List<UUID> bonsais_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update bonsai set owner = :owner where id in (:bonsais_id) AND owner is null")
+    void updateOwnerOfBonsaisWithNoOwner(@Param("owner") OwnerEntity owner, @Param("bonsais_id") List<UUID> bonsais_id);
 }

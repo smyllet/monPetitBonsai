@@ -88,4 +88,14 @@ public class OwnerController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/{owner_id}/bonsais")
+    public ResponseEntity<Void> updateOwnerOfBonsaisWithNoOwner(@PathVariable("owner_id") String owner_id, @RequestBody List<String> bonsaisUUID) {
+        try {
+            ownerService.updateOwnerOfBonsaisWithNoOwner(UUID.fromString(owner_id), bonsaisUUID.stream().map(UUID::fromString).collect(Collectors.toList()));
+            return ResponseEntity.noContent().build();
+        } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

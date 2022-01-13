@@ -70,4 +70,8 @@ public class OwnerRepository {
     public void setBonsaiOwner(Bonsai bonsai, Owner owner) {
         bonsaiDao.updateOwnerOfBonsais(OwnerMapper.mapOwnerToOwnerEntity(owner), Collections.singletonList(bonsai.getId()));
     }
+
+    public void updateOwnerOfBonsaisWithNoOwner(Owner owner, List<UUID> bonsaisUUID) {
+        bonsaiDao.updateOwnerOfBonsaisWithNoOwner(OwnerMapper.mapOwnerToOwnerEntity(owner), bonsaisUUID);
+    }
 }
