@@ -4,15 +4,18 @@ import fr.bryanprolong.monpetitbonsai.commons.dao.BonsaiDao;
 import fr.bryanprolong.monpetitbonsai.commons.entity.BonsaiEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.OwnerEntity;
 import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
+import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
+import fr.bryanprolong.monpetitbonsai.owner.exposition.dto.OwnerBonsaiDTO;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import fr.bryanprolong.monpetitbonsai.commons.dao.OwnerDao;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -62,5 +65,9 @@ public class OwnerRepository {
         } else {
             throw new OwnerNotFoundException();
         }
+    }
+
+    public void setBonsaiOwner(Bonsai bonsai, Owner owner) {
+        bonsaiDao.updateOwnerOfBonsais(OwnerMapper.mapOwnerToOwnerEntity(owner), Collections.singletonList(bonsai.getId()));
     }
 }

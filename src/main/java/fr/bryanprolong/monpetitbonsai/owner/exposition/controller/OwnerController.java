@@ -1,5 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.owner.exposition.controller;
 
+import fr.bryanprolong.monpetitbonsai.owner.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Owner;
@@ -71,6 +72,19 @@ public class OwnerController {
             ownerService.deleteById(UUID.fromString(uuid));
             return ResponseEntity.noContent().build();
         } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{owner_id}/bonsais/{bonsai_id}/transfer")
+    public ResponseEntity<OwnerBonsaiDTO> transferBonsaiToAnOwner(@PathVariable("owner_id") String owner_id, @PathVariable("bonsai_id") String bonsai_id, @RequestBody String new_owner_id) {
+        try {
+            Bonsai bonsai = ownerService.transferBonsaiToAnOwner(UUID.fromString(owner_id), UUID.fromString(bonsai_id), UUID.fromString(new_owner_id));
+
+            OwnerBonsaiDTO bonsaiDTO = BonsaiMapper.mapBonsaiToBonsaiDTO(bonsai);
+
+            return ResponseEntity.ok(bonsaiDTO);
+        } catch (BonsaiNotFoundException | OwnerNotFoundException bonsaiNotFoundException) {
             return ResponseEntity.notFound().build();
         }
     }
