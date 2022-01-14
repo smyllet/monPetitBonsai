@@ -1,5 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.authentication.domain;
 
+import fr.bryanprolong.monpetitbonsai.authentication.domain.exception.InvalidePasswordException;
+import fr.bryanprolong.monpetitbonsai.authentication.domain.model.PasswordChangeRequest;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.model.UserCreationRequest;
 import fr.bryanprolong.monpetitbonsai.commons.entity.AuthorityEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.UserEntity;
@@ -39,6 +41,16 @@ public class UserService implements UserDetailsService {
         savedUser.setAuthorities(authorities);
 
         userDao.save(savedUser);
+    }
+
+    public void updatePasswordUserByUsername(String username, PasswordChangeRequest passwordChangeRequest) throws InvalidePasswordException {
+        UserEntity userEntity = userDao.findByUsername(username);
+        if(passwordEncoder.matches(passwordChangeRequest.getOld_password(), userEntity.getPassword())) {
+            userEntity.setPassword(passwordEncoder.encode(passwordChangeRequest.getPassword()));
+            userDao.save(userEntity);
+        } else {
+            throw new InvalidePasswordException();
+        }
     }
 
     @Override
