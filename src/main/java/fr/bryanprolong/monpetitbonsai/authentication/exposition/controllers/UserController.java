@@ -5,10 +5,11 @@ import fr.bryanprolong.monpetitbonsai.authentication.domain.UserService;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.exception.InvalidePasswordException;
 import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.PasswordChangeRequestDTO;
 import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.UserCreationRequestDTO;
+import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.UserDTO;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.PasswordChangeRequestMapper;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserCreationRequestMapper;
+import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +48,12 @@ public class UserController {
                 return ResponseEntity.status(500).build();
             }
         } else return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getProfil() {
+        AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return ResponseEntity.ok(UserMapper.mapModelToDTO(userService.getUserByUsername(credentials.getUsername())));
     }
 }

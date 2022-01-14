@@ -2,7 +2,9 @@ package fr.bryanprolong.monpetitbonsai.authentication.domain;
 
 import fr.bryanprolong.monpetitbonsai.authentication.domain.exception.InvalidePasswordException;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.model.PasswordChangeRequest;
+import fr.bryanprolong.monpetitbonsai.authentication.domain.model.User;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.model.UserCreationRequest;
+import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserMapper;
 import fr.bryanprolong.monpetitbonsai.commons.entity.AuthorityEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.UserEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.AuthorityId;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -51,6 +55,10 @@ public class UserService implements UserDetailsService {
         } else {
             throw new InvalidePasswordException();
         }
+    }
+
+    public User getUserByUsername(String username) {
+        return UserMapper.mapEntityToModel(userDao.findByUsername(username));
     }
 
     @Override
