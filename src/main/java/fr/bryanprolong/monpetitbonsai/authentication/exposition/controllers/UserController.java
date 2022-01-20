@@ -3,18 +3,23 @@ package fr.bryanprolong.monpetitbonsai.authentication.exposition.controllers;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.AppUser;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.UserService;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.exception.InvalidePasswordException;
+import fr.bryanprolong.monpetitbonsai.authentication.domain.model.User;
 import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.PasswordChangeRequestDTO;
 import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.UserCreationRequestDTO;
 import fr.bryanprolong.monpetitbonsai.authentication.exposition.dto.UserDTO;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.PasswordChangeRequestMapper;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserCreationRequestMapper;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserMapper;
+import fr.bryanprolong.monpetitbonsai.commons.type.AuthorityType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -55,5 +60,17 @@ public class UserController {
         AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return ResponseEntity.ok(UserMapper.mapModelToDTO(userService.getUserByUsername(credentials.getUsername())));
+    }
+
+    @PreAuthorize("hasRole('STAFF')")
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAll() {
+        return ResponseEntity.ok(userService.getAllUser().stream().map(UserMapper::mapModelToDTO).collect(Collectors.toList()));
+    }
+
+    @PutMapping("/{username}/authority")
+    public ResponseEntity<User> updateUserAuthority(@PathVariable String username, @RequestBody AuthorityType authorityType) {
+        User user = userService.changeAuthorityUserByUsername(username, authorityType);
+        return ResponseEntity.ok(user);
     }
 }

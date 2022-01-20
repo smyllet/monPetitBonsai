@@ -5,10 +5,12 @@ import fr.bryanprolong.monpetitbonsai.authentication.domain.model.PasswordChange
 import fr.bryanprolong.monpetitbonsai.authentication.domain.model.User;
 import fr.bryanprolong.monpetitbonsai.authentication.domain.model.UserCreationRequest;
 import fr.bryanprolong.monpetitbonsai.authentication.modelMapper.UserMapper;
+import fr.bryanprolong.monpetitbonsai.commons.dao.AuthorityDao;
 import fr.bryanprolong.monpetitbonsai.commons.entity.AuthorityEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.UserEntity;
 import fr.bryanprolong.monpetitbonsai.commons.entity.AuthorityId;
 import fr.bryanprolong.monpetitbonsai.commons.dao.UserDao;
+import fr.bryanprolong.monpetitbonsai.commons.type.AuthorityType;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,16 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserDao userDao;
+    private final AuthorityDao authorityDao;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserService(UserDao userDao, PasswordEncoder passwordEncoder, AuthorityDao authorityDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.authorityDao = authorityDao;
     }
 
     @Transactional
@@ -61,6 +66,10 @@ public class UserService implements UserDetailsService {
         return UserMapper.mapEntityToModel(userDao.findByUsername(username));
     }
 
+    public List<User> getAllUser() {
+        return userDao.findAll().stream().map(UserMapper::mapEntityToModel).collect(Collectors.toList());
+    }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserEntity user = userDao.findByUsername(s);
@@ -68,5 +77,22 @@ public class UserService implements UserDetailsService {
         String authorities = String.join(",", authoritiesList);
         return new AppUser(user.getId(), user.getUsername(), user.getPassword(),
                 AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
+    }
+
+    public User changeAuthorityUserByUsername(String username, AuthorityType authorityType) {
+        UserEntity user = userDao.findByUsername(username);
+        userDao.removeAuthorityByUsername(user.getId());
+
+        AuthorityId authorityId = new AuthorityId();
+        authorityId.setUuid(user.getId());
+        authorityId.setAuthority(authorityType.name());
+
+        AuthorityEntity authorityEntity = new AuthorityEntity();
+        authorityEntity.setAuthorityId(authorityId);
+
+
+        authorityDao.save(authorityEntity);
+
+        return UserMapper.mapEntityToModel(userDao.findByUsername(username));
     }
 }
