@@ -115,9 +115,26 @@ public class BonsaiController {
     @PutMapping("/{uuid}/status")
     public ResponseEntity<BonsaiDTO> changeBonsaiStatusById(@PathVariable("uuid") String uuid, @RequestBody Status status) {
         try {
-            bonsaiService.changeBonsaiStatusById(UUID.fromString(uuid), status);
+            AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            return ResponseEntity.noContent().build();
+            boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STAFF") || authority.getAuthority().equals("ADMIN"));
+
+            if(isAdmin) {
+                bonsaiService.changeBonsaiStatusById(UUID.fromString(uuid), status);
+
+                return ResponseEntity.noContent().build();
+            } else {
+                Optional<Bonsai> optionalBonsai = bonsaiService.findById(UUID.fromString(uuid));
+                if(optionalBonsai.isPresent()) {
+                    String owner_id = optionalBonsai.get().getOwner().getId().toString();
+
+                    if(credentials.getId().toString().equals(owner_id)) {
+                        bonsaiService.changeBonsaiStatusById(UUID.fromString(uuid), status);
+
+                        return ResponseEntity.noContent().build();
+                    } else return ResponseEntity.status(403).build();
+                } else throw new BonsaiNotFoundException();
+            }
         } catch (BonsaiNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
