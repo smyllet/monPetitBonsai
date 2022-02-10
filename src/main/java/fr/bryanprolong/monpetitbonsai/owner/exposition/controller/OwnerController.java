@@ -1,5 +1,7 @@
 package fr.bryanprolong.monpetitbonsai.owner.exposition.controller;
 
+import fr.bryanprolong.monpetitbonsai.authentication.domain.AppUser;
+import fr.bryanprolong.monpetitbonsai.commons.type.AuthorityType;
 import fr.bryanprolong.monpetitbonsai.owner.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.exception.OwnerNotFoundException;
 import fr.bryanprolong.monpetitbonsai.owner.domain.model.Bonsai;
@@ -12,9 +14,12 @@ import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -81,11 +86,18 @@ public class OwnerController {
     @PostMapping("/{owner_id}/bonsais/{bonsai_id}/transfer")
     public ResponseEntity<OwnerBonsaiDTO> transferBonsaiToAnOwner(@PathVariable("owner_id") String owner_id, @PathVariable("bonsai_id") String bonsai_id, @RequestBody String new_owner_id) {
         try {
-            Bonsai bonsai = ownerService.transferBonsaiToAnOwner(UUID.fromString(owner_id), UUID.fromString(bonsai_id), UUID.fromString(new_owner_id));
+            AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            OwnerBonsaiDTO bonsaiDTO = BonsaiMapper.mapBonsaiToBonsaiDTO(bonsai);
+            boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+            boolean isOwner = credentials.getId().toString().equals(owner_id);
 
-            return ResponseEntity.ok(bonsaiDTO);
+            if(isAdmin || isOwner) {
+                Bonsai bonsai = ownerService.transferBonsaiToAnOwner(UUID.fromString(owner_id), UUID.fromString(bonsai_id), UUID.fromString(new_owner_id));
+
+                OwnerBonsaiDTO bonsaiDTO = BonsaiMapper.mapBonsaiToBonsaiDTO(bonsai);
+
+                return ResponseEntity.ok(bonsaiDTO);
+            } else return ResponseEntity.status(403).build();
         } catch (BonsaiNotFoundException | OwnerNotFoundException bonsaiNotFoundException) {
             return ResponseEntity.notFound().build();
         }
