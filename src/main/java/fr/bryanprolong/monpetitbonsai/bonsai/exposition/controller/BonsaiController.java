@@ -88,28 +88,30 @@ public class BonsaiController {
 
     @PatchMapping("/{uuid}")
     public ResponseEntity<BonsaiDTO> updateById(@PathVariable("uuid") String uuid, @RequestBody BonsaiDTO bonsaiDTO) {
-        AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STAFF") || authority.getAuthority().equals("ADMIN"));
+            boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STAFF") || authority.getAuthority().equals("ADMIN"));
 
-
-        if(isAdmin) {
-            try {
+            if(isAdmin) {
+                Bonsai bonsaiInput = BonsaiMapper.mapBonsaiDTOtoBonsai(bonsaiDTO);
+                Bonsai bonsaiOutput = bonsaiService.updateById(UUID.fromString(uuid), bonsaiInput);
+                return ResponseEntity.ok(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
+            } else {
                 Optional<Bonsai> optionalBonsai = bonsaiService.findById(UUID.fromString(uuid));
                 if(optionalBonsai.isPresent()) {
                     String owner_id = optionalBonsai.get().getOwner().getId().toString();
-                    boolean isOwner = credentials.getId().toString().equals(owner_id);
 
-                    if(isOwner) {
+                    if(credentials.getId().toString().equals(owner_id)) {
                         Bonsai bonsaiInput = BonsaiMapper.mapBonsaiDTOtoBonsai(bonsaiDTO);
                         Bonsai bonsaiOutput = bonsaiService.updateById(UUID.fromString(uuid), bonsaiInput);
                         return ResponseEntity.ok(BonsaiMapper.mapBonsaiToBonsaiDTO(bonsaiOutput));
                     } else return ResponseEntity.status(403).build();
                 } else throw new BonsaiNotFoundException();
-            } catch (BonsaiNotFoundException e) {
-                return ResponseEntity.notFound().build();
             }
-        } else return ResponseEntity.status(403).build();
+        } catch (BonsaiNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{uuid}/status")
