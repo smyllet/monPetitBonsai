@@ -1,5 +1,6 @@
 package fr.bryanprolong.monpetitbonsai.bonsai.exposition.controller;
 
+import fr.bryanprolong.monpetitbonsai.authentication.domain.AppUser;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.exception.BonsaiNotFoundException;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Bonsai;
 import fr.bryanprolong.monpetitbonsai.bonsai.domain.model.Pruning;
@@ -19,6 +20,7 @@ import fr.bryanprolong.monpetitbonsai.bonsai.modelMapper.WateringMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -61,8 +63,24 @@ public class BonsaiController {
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteBonsai(@PathVariable("uuid") String uuid) {
         try {
-            bonsaiService.deleteById(UUID.fromString(uuid));
-            return ResponseEntity.noContent().build();
+            AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+
+            if(isAdmin) {
+                bonsaiService.deleteById(UUID.fromString(uuid));
+                return ResponseEntity.noContent().build();
+            } else {
+                Optional<Bonsai> optionalBonsai = bonsaiService.findById(UUID.fromString(uuid));
+                if(optionalBonsai.isPresent()) {
+                    String owner_id = optionalBonsai.get().getOwner().getId().toString();
+                    boolean isOwner = credentials.getId().toString().equals(owner_id);
+                    if(isOwner) {
+                        bonsaiService.deleteById(UUID.fromString(uuid));
+                        return ResponseEntity.noContent().build();
+                    } else return ResponseEntity.status(403).build();
+                } else throw new BonsaiNotFoundException();
+            }
         } catch (BonsaiNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
