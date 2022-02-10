@@ -11,6 +11,7 @@ import fr.bryanprolong.monpetitbonsai.owner.modelMapper.BonsaiMapper;
 import fr.bryanprolong.monpetitbonsai.owner.modelMapper.OwnerMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<OwnerDTO> getOwners() {
         return ownerService.findAll().stream()
