@@ -7,6 +7,7 @@ public class UserCreationRequestMapper {
     public static UserCreationRequest mapUserCreationRequestDTOToUserCreationRequest(UserCreationRequestDTO userCreationRequestDTO) {
         UserCreationRequest userCreationRequest = new UserCreationRequest();
 
+        userCreationRequest.setName(userCreationRequestDTO.getName());
         userCreationRequest.setUsername(userCreationRequestDTO.getUsername());
         userCreationRequest.setPassword(userCreationRequestDTO.getPassword());
 

@@ -12,6 +12,7 @@ public class UserMapper {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
+        userDTO.setName(user.getName());
         userDTO.setUsername(user.getUsername());
         userDTO.setEnabled(user.isEnabled());
         userDTO.setAuthority(user.getAuthority());
@@ -23,6 +24,7 @@ public class UserMapper {
         User user = new User();
 
         user.setId(userEntity.getId());
+        user.setName(userEntity.getName());
         user.setUsername(userEntity.getUsername());
         user.setEnabled(userEntity.isEnabled());
         user.setAuthority(userEntity.getAuthorities().stream().map(AuthorityEntity::getAuthority).collect(Collectors.toList()));

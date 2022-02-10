@@ -2,25 +2,35 @@ drop table if exists monPetitBonsai.repotting;
 drop table if exists monPetitBonsai.pruning;
 drop table if exists monPetitBonsai.watering;
 drop table if exists monPetitBonsai.bonsai;
+drop table if exists monPetitBonsai.authorities;
 drop table if exists monPetitBonsai.owner;
 drop schema if exists monPetitBonsai;
 
 create schema monPetitBonsai;
 
 create table monPetitBonsai.owner (
-  id UUID primary key not null,
-  name varchar(200) not null
+    id UUID primary key not null,
+    name varchar(200) not null,
+    username varchar(200) unique,
+    password varchar(1000),
+    enabled boolean default true
+);
+
+create table monPetitBonsai.authorities (
+    user_id uuid,
+    authority varchar(200),
+    foreign key (user_id) references monPetitBonsai.owner(id)
 );
 
 create table monPetitBonsai.bonsai (
-   id UUID primary key not null,
-   name varchar(200) not null,
-   species varchar(200),
-   acquisition_date date,
-   acquisition_age int,
-   owner_id UUID,
-   status varchar(50),
-   foreign key (owner_id) references monPetitBonsai.owner(id)
+    id UUID primary key not null,
+    name varchar(200) not null,
+    species varchar(200),
+    acquisition_date date,
+    acquisition_age int,
+    owner_id UUID,
+    status varchar(50),
+    foreign key (owner_id) references monPetitBonsai.owner(id)
 );
 
 create table monPetitBonsai.watering (
@@ -31,20 +41,22 @@ create table monPetitBonsai.watering (
 );
 
 create table monPetitBonsai.pruning (
-     id UUID primary key not null,
-     datetime timestamp not null,
-     bonsai_id UUID not null,
-     foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
+    id UUID primary key not null,
+    datetime timestamp not null,
+    bonsai_id UUID not null,
+    foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
 );
 
 create table monPetitBonsai.repotting (
-      id UUID primary key not null,
-      datetime timestamp not null,
-      bonsai_id UUID not null,
-      foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
+    id UUID primary key not null,
+    datetime timestamp not null,
+    bonsai_id UUID not null,
+    foreign key (bonsai_id) references monPetitBonsai.bonsai(id)
 );
 
-insert into monPetitBonsai.owner(id, name) values ('a3387036-4946-11ec-81d3-0242ac130003', 'Bryan'), ('ae1f28b4-4946-11ec-81d3-0242ac130003', 'Nahoufane');
+insert into monPetitBonsai.owner(id, name, username, password) values ('a3387036-4946-11ec-81d3-0242ac130003', 'Bryan', 'smyllet', '$2a$10$RqR6nT3bLpSYTO0jdWQs9Om.qCiT8zEmQv8NXnGB8yXpH6GN19BJ6'), ('ae1f28b4-4946-11ec-81d3-0242ac130003', 'Nahoufane', 'aiglesan', '$2a$10$RqR6nT3bLpSYTO0jdWQs9Om.qCiT8zEmQv8NXnGB8yXpH6GN19BJ6');
+
+insert into monPetitBonsai.authorities(user_id, authority) VALUES ('a3387036-4946-11ec-81d3-0242ac130003', 'ADMIN'), ('ae1f28b4-4946-11ec-81d3-0242ac130003', 'USER');
 
 insert into monPetitBonsai.bonsai(id, name, species, acquisition_date, acquisition_age, owner_id, status) values
     ('63696432-01a2-4b43-b162-47b4f1e6062a', 'Mathilde', 'Jade tree', '10-06-2021', 25, 'a3387036-4946-11ec-81d3-0242ac130003', 'ALIVE'),

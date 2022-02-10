@@ -1,11 +1,20 @@
 package fr.bryanprolong.monpetitbonsai.authentication.exposition.dto;
 
 public class UserCreationRequestDTO {
+    private String name;
     private String username;
     private String password;
     private String confirm_password;
 
     public UserCreationRequestDTO() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {

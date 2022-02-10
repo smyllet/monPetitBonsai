@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "owner")
 public class UserEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -32,6 +34,14 @@ public class UserEntity {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

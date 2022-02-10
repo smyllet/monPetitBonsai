@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class UserDTO {
     private UUID id;
+    private String name;
     private String username;
     private boolean enabled;
     private List<String> authority;
@@ -18,6 +19,14 @@ public class UserDTO {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {

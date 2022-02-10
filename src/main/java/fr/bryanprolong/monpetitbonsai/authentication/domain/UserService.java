@@ -41,6 +41,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void create(UserCreationRequest userCreationRequest) {
         UserEntity userEntity = new UserEntity();
+        userEntity.setName(userCreationRequest.getName());
         userEntity.setUsername(userCreationRequest.getUsername());
         userEntity.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
         UserEntity savedUser = userDao.save(userEntity);
