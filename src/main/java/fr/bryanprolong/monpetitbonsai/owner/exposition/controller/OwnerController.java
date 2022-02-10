@@ -73,6 +73,7 @@ public class OwnerController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteOwner(@PathVariable("uuid") String uuid) {
         try {
@@ -106,8 +107,17 @@ public class OwnerController {
     @PostMapping("/{owner_id}/bonsais")
     public ResponseEntity<Void> updateOwnerOfBonsaisWithNoOwner(@PathVariable("owner_id") String owner_id, @RequestBody List<String> bonsaisUUID) {
         try {
-            ownerService.updateOwnerOfBonsaisWithNoOwner(UUID.fromString(owner_id), bonsaisUUID.stream().map(UUID::fromString).collect(Collectors.toList()));
-            return ResponseEntity.noContent().build();
+            AppUser credentials = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            boolean isAdmin = credentials.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+            boolean isOwner = credentials.getId().toString().equals(owner_id);
+
+            if(isAdmin || isOwner) {
+                ownerService.updateOwnerOfBonsaisWithNoOwner(UUID.fromString(owner_id), bonsaisUUID.stream().map(UUID::fromString).collect(Collectors.toList()));
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(403).build();
+            }
         } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
