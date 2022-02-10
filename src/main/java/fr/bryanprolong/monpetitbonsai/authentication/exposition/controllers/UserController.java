@@ -68,6 +68,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUser().stream().map(UserMapper::mapModelToDTO).collect(Collectors.toList()));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{username}/authority")
     public ResponseEntity<User> updateUserAuthority(@PathVariable String username, @RequestBody AuthorityType authorityType) {
         User user = userService.changeAuthorityUserByUsername(username, authorityType);
