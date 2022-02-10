@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.mapModelToDTO(userService.getUserByUsername(credentials.getUsername())));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('STAFF')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAll() {
         return ResponseEntity.ok(userService.getAllUser().stream().map(UserMapper::mapModelToDTO).collect(Collectors.toList()));
